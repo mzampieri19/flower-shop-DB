@@ -30,6 +30,13 @@ const Room =
       }
 );
 
+const Comment = 
+    mongoose.model('Room', 
+      { name: String,
+        comment: String,
+      }
+);
+
 var app = express();
 
 app.disable('etag');
@@ -60,6 +67,23 @@ app.get('/debug',
     res.locals.rooms = rooms
     res.render('showrooms');
     //res.json(rooms);
+  }
+);
+
+app.get("/comments",
+  async (req,res,next) => {
+    const comments = await Comment.find({});
+    res.json(comments);
+  }
+);
+
+app.post("/comments",
+  async (req,res,next) => {
+    const name = req.body.name;
+    const comment = req.body.comment;
+    let newComment = new Comment({name,comment});
+    await newComment.save();
+    res.json(newComment);
   }
 );
 
