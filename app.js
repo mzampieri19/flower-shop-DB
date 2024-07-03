@@ -31,7 +31,7 @@ const Room =
 );
 
 const Comment = 
-    mongoose.model('Room', 
+    mongoose.model('Comment', 
       { name: String,
         comment: String,
       }
